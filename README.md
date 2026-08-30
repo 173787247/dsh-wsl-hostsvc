@@ -1,4 +1,6 @@
-# dsh-wsl-hostsvc
+# 
+
+DeepSeek Harness tool: **${tool}** — 
 
 DeepSeek Harness tool: **`host_reach`** — DeepSeek Harness tool: probe Windows-host services (Ollama, custom ports) from WSL.
 

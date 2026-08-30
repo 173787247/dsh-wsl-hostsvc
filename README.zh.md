@@ -1,4 +1,6 @@
-# dsh-wsl-hostsvc
+# 
+
+DeepSeek Harness 工具：**${tool}** — 
 
 DeepSeek Harness 工具：**`host_reach`** — 从 WSL 探测 Windows 主机上的服务（Ollama / 自定义端口）。
 
