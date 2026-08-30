@@ -1,8 +1,6 @@
-# 
+# dsh-wsl-hostsvc
 
-DeepSeek Harness tool: **${tool}** — 
-
-DeepSeek Harness tool: **`host_reach`** — DeepSeek Harness tool: probe Windows-host services (Ollama, custom ports) from WSL.
+DeepSeek Harness tool: **`host_reach`** — probe Windows-host services (Ollama, custom ports) from WSL.
 
 Part of **[dsh-wsl-kit](https://github.com/173787247/dsh-wsl-kit)**.
 
@@ -28,8 +26,8 @@ Restart `dsh web`. New session → Tools should list `host_reach`.
 - id: dsh-wsl-hostsvc
   name: dsh-wsl-hostsvc
   config:
-        timeoutMs: 8000
-        defaultPorts: [11434]
+    timeoutMs: 8000
+    defaultPorts: [11434]
 ```
 
 | Key | Default | Meaning |

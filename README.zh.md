@@ -1,6 +1,4 @@
-# 
-
-DeepSeek Harness 工具：**${tool}** — 
+# dsh-wsl-hostsvc
 
 DeepSeek Harness 工具：**`host_reach`** — 从 WSL 探测 Windows 主机上的服务（Ollama / 自定义端口）。
 
@@ -28,8 +26,8 @@ dsh plugin --profile web add github:173787247/dsh-wsl-hostsvc
 - id: dsh-wsl-hostsvc
   name: dsh-wsl-hostsvc
   config:
-        timeoutMs: 8000
-        defaultPorts: [11434]
+    timeoutMs: 8000
+    defaultPorts: [11434]
 ```
 
 | 键 | 默认 | 含义 |
