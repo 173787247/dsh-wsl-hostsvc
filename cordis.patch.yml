@@ -2,5 +2,4 @@
     - id: dsh-wsl-hostsvc
       name: dsh-wsl-hostsvc
       config:
-        timeoutMs: 8000
-        defaultPorts: [11434]
+        timeoutMs: 15000
