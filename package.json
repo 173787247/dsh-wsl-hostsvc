@@ -1,7 +1,7 @@
 {
   "name": "dsh-wsl-hostsvc",
   "version": "0.1.0",
-  "description": "DeepSeek Harness tool: probe Windows-host services (Ollama, custom ports) from WSL.",
+  "description": "Probe Windows-host services (Ollama, etc.) from WSL and suggest baseURL.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test test/hostsvc.test.js"
+    "test": "node --test test/*.test.js"
   },
   "files": [
     "index.js",
@@ -25,17 +25,14 @@
     "cordis.patch.yml",
     "README.md",
     "README.zh.md",
-    "LICENSE",
-    "CHANGELOG.md",
-    "CONTRIBUTING.md"
+    "LICENSE"
   ],
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
     "wsl",
     "host",
-    "ollama",
-    "reachability"
+    "ollama"
   ],
   "dsh": {
     "bundle": {
