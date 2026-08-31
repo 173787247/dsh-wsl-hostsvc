@@ -1,0 +1,72 @@
+# Paste under llm-pi-ai.providers in ~/.dsh/settings.yaml (WSL).
+# 1) Run host_reach (profile=all) from a DSH session and copy a reachable baseURL.
+# 2) Set a dummy key in the shell that starts dsh web, e.g.:
+#      export OLLAMA_API_KEY=ollama
+#      export LMSTUDIO_API_KEY=lmstudio
+#      export VLLM_API_KEY=vllm
+#      export LLAMA_API_KEY=llama
+# 3) Model ids must match what the server lists (ollama list / LM Studio / vLLM / llama-server).
+# 4) On Windows, bind the server beyond 127.0.0.1 if WSL cannot reach it
+#    (OLLAMA_HOST=0.0.0.0:11434, LM Studio "Serve on local network", etc.).
+
+llm-pi-ai:
+  providers:
+    ollama:
+      displayName: Local Ollama (Windows)
+      apiKeyEnv: OLLAMA_API_KEY
+      api: openai-completions
+      # Replace with host_reach suggestedBaseURL for ollama (port 11434)
+      baseURL: http://127.0.0.1:11434/v1
+      compat:
+        supportsDeveloperRole: false
+        maxTokensField: max_tokens
+      models:
+        - id: qwen38-27b-local:latest
+          name: Qwen3.8 27B local (UD-Q4)
+          contextWindow: 131072
+          maxTokens: 8192
+
+    lmstudio:
+      displayName: LM Studio (Windows)
+      apiKeyEnv: LMSTUDIO_API_KEY
+      api: openai-completions
+      # Default LM Studio local server port
+      baseURL: http://127.0.0.1:1234/v1
+      compat:
+        supportsDeveloperRole: false
+        maxTokensField: max_tokens
+      models:
+        - id: REPLACE_WITH_LMSTUDIO_MODEL_ID
+          name: LM Studio model
+          contextWindow: 32768
+          maxTokens: 8192
+
+    vllm:
+      displayName: vLLM (Docker / WSL)
+      apiKeyEnv: VLLM_API_KEY
+      api: openai-completions
+      # Official OpenAI-compatible server often listens on 8000
+      baseURL: http://127.0.0.1:8000/v1
+      compat:
+        supportsDeveloperRole: false
+        maxTokensField: max_tokens
+      models:
+        - id: REPLACE_WITH_VLLM_SERVED_MODEL
+          name: vLLM served model
+          contextWindow: 131072
+          maxTokens: 8192
+
+    llama:
+      displayName: llama-server / Unsloth Desktop
+      apiKeyEnv: LLAMA_API_KEY
+      api: openai-completions
+      # Confirm port in Unsloth Desktop / llama-server UI (8080 is common)
+      baseURL: http://127.0.0.1:8080/v1
+      compat:
+        supportsDeveloperRole: false
+        maxTokensField: max_tokens
+      models:
+        - id: REPLACE_WITH_LLAMA_SERVER_MODEL
+          name: llama-server model
+          contextWindow: 131072
+          maxTokens: 8192
