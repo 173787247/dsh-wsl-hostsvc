@@ -11,12 +11,12 @@ export function apply(ctx, config = {}) {
   ctx.systemPrompt.section({
     name: "tool:host_reach",
     order: 114,
-    text: "Use host_reach for WSL/Windows interop: Probe Windows-host services (Ollama, etc.) from WSL and suggest baseURL.",
+    text: "Use host_reach to probe Windows-host local LLMs from WSL (Ollama 11434, LM Studio 1234, vLLM 8000, llama-server 8080) and copy suggestedBaseURL into llm-pi-ai providers.",
   });
 
   ctx.tools.register({
     name: "host_reach",
-    description: "Probe Windows-host services (Ollama, etc.) from WSL and suggest baseURL.",
+    description: "Probe Windows-host Ollama / LM Studio / vLLM / llama-server from WSL; suggest OpenAI-compatible baseURL.",
     parameters: core.parameters(config),
     output: {
       schema: core.outputSchema(),
