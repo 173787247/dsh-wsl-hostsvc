@@ -11,7 +11,7 @@ export function apply(ctx, config = {}) {
   ctx.systemPrompt.section({
     name: "tool:host_reach",
     order: 114,
-    text: "Use host_reach to probe Windows-host local LLMs from WSL (Ollama 11434, LM Studio 1234, vLLM 8000, llama-server 8080) and copy suggestedBaseURL into llm-pi-ai providers.",
+    text: "Use host_reach to probe Windows-host local LLMs from WSL (Ollama 11434, LM Studio 1234, vLLM 8000, llama-server 8080). Paste providerSnippets into ~/.dsh/settings.yaml under llm-pi-ai.providers; keep contextWindow ≤ Ollama n_ctx. Follow connectivityPlaybook when HTTPS or DNS also fails.",
   });
 
   ctx.tools.register({
