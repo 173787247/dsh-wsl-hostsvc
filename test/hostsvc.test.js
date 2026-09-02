@@ -4,6 +4,7 @@ import {
   buildOllamaHints,
   buildProviderSnippets,
   buildUnslothHints,
+  buildVllmHints,
   CONNECTIVITY_PLAYBOOK,
 } from "../lib/providers.js";
 import { format, parameters, SERVICE_PORTS } from "../lib/hostsvc.js";
@@ -76,5 +77,10 @@ describe("providers", () => {
   it("emits unsloth hints for llama service", () => {
     const hints = buildUnslothHints({ id: "llama", open: true });
     assert.ok(hints.some((h) => /Unsloth/i.test(h)));
+  });
+
+  it("emits docker hints when vllm port is closed", () => {
+    const hints = buildVllmHints({ id: "vllm", open: false });
+    assert.ok(hints.some((h) => /docker_doctor|Docker/i.test(h)));
   });
 });
