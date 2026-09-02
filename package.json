@@ -1,6 +1,6 @@
 {
   "name": "dsh-wsl-hostsvc",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "From WSL, probe Windows-host Ollama / LM Studio / vLLM / llama-server and suggest baseURL.",
   "license": "MIT",
   "repository": {
