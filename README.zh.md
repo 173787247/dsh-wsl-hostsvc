@@ -1,8 +1,8 @@
 # dsh-wsl-hostsvc
 
-DeepSeek Harness 插件：在 **WSL** 里探测 **Windows 主机**上的 OpenAI 兼容本地 LLM，并给出可达的 `baseURL`。
+> **套件安装：** 见 [dsh-wsl-kit](https://github.com/173787247/dsh-wsl-kit)。推荐 `KIT_SET=daily` | `llm` | `github` | `full`。故障树：[TROUBLESHOOTING.zh.md](https://github.com/173787247/dsh-wsl-kit/blob/master/docs/TROUBLESHOOTING.zh.md)。
 
-配套 **[dsh-wsl-kit](https://github.com/173787247/dsh-wsl-kit)**。
+DeepSeek Harness 插件：在 **WSL** 里探测 **Windows 主机**上的 OpenAI 兼容本地 LLM，并给出可达的 `baseURL`。
 
 [English → README.md](./README.md)
 
@@ -13,27 +13,53 @@ DeepSeek Harness 插件：在 **WSL** 里探测 **Windows 主机**上的 OpenAI 
 | id | 端口 | 常见服务 |
 |----|------|----------|
 | `ollama` | 11434 | Ollama |
-| `lmstudio` | 1234 | LM Studio 本地服务 |
-| `vllm` | 8000 | vLLM OpenAI 服务 |
+| `lmstudio` | 1234 | LM Studio |
+| `vllm` | 8000 | vLLM |
 | `llama` | 8080 | llama-server / Unsloth Desktop |
 
 探测主机：`127.0.0.1`、`localhost`、`host.docker.internal`，以及 `/etc/resolv.conf` 里的 Windows IP。
 
-把返回的 `suggestedBaseURL` 写进 `~/.dsh/settings.yaml` 的 `llm-pi-ai.providers.*.baseURL`（保留 `/v1`）。模板见 [`examples/local-llm-providers.settings.yaml`](./examples/local-llm-providers.settings.yaml)。
+### 值得粘贴的字段
+
+- **`suggestedBaseURL`** → `settings.yaml` 的 `baseURL`（保留 `/v1`）
+- **`providerSnippets.yaml`** → 整段贴进 `llm-pi-ai.providers`
+- **`ollamaModels`** → 与 `ollama list` 一致的模型名
+- **`connectivityPlaybook`** → HTTPS/DNS 也坏时的工具顺序
+- **hints** → Ollama `n_ctx`、Unsloth Desktop≠Studio、显存
+
+模板：[`examples/local-llm-providers.settings.yaml`](./examples/local-llm-providers.settings.yaml)。
+
+## Ollama 上下文（常见 400）
+
+插件多时，系统提示 + 工具 schema 很容易 **>8k tokens**。
+
+1. Ollama 设 `PARAMETER num_ctx 32768`（或 Windows 启动前 `OLLAMA_NUM_CTX`）
+2. settings 的 `contextWindow` **对齐** 实际 `n_ctx`（不要写 131072 而 Ollama 仍是 8192）
+3. `maxTokens` 小于窗口（如 4096），给 prompt 留空
+
+## Unsloth / Flash-Next
+
+- Desktop（winget）≠ Studio；Desktop 常在 **:8080** 提供 `/v1`
+- Flash-Next 多分片 GGUF：优先 Desktop / 带补丁的 llama.cpp；普通 Ollama 不一定能加载
+- 同一张 16GB 卡上不要同时硬开 Ollama + vLLM + llama-server
 
 ## 安装
 
 ```sh
+curl -fsSL https://raw.githubusercontent.com/173787247/dsh-wsl-kit/master/install.sh | KIT_SET=llm bash
+# 或单独：
 dsh plugin --profile web add github:173787247/dsh-wsl-hostsvc
 ```
 
-重启 `dsh web` 并开**新**会话。
+重启 `dsh web`，开**新**会话。
+
+Windows 浏览器访问 WSL 里的 UI：跑 kit 的 `scripts/restart-dsh-web.sh`，打开 **http://127.0.0.1:3081/**（中继；dsh 只绑 `127.0.0.1:3080`）。
 
 ## 用法
 
-让 agent 跑 `host_reach`；可用 `profile: ollama|lmstudio|vllm|llama|all`，或 `port` 扫自定义端口。
+让 agent 跑 `host_reach`；可用 `profile` / `port` / `includeProviders`。
 
-若全是 closed：在 Windows 让服务监听 `0.0.0.0`（如 `OLLAMA_HOST=0.0.0.0:11434`），或开 WSL mirrored networking，再测一次。
+全 closed：Windows 侧 `OLLAMA_HOST=0.0.0.0:11434` 或开 mirrored networking 后再测。
 
 ## 许可
 
