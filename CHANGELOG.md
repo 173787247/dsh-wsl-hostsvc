@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- Fix `value is not lossless JSON`: probe `error` always a string; sanitize tool output with `toLossless` (no `undefined`).
+
 ## 0.4.0
 
 - Probe Ollama `/api/show` for real `num_ctx` and compare to `~/.dsh/settings.yaml` `contextWindow` (`ctxReports` / `ctxMatch`).

@@ -100,5 +100,15 @@ llm-pi-ai:
     assert.equal(map["qwen38-27b-local"], 131072);
     assert.equal(compareCtx(131072, 8192).ctxMatch, "mismatch");
     assert.equal(compareCtx(8192, 8192).ctxMatch, "ok");
+    assert.equal(compareCtx(null, 8192).ctxMatch, "unknown");
+  });
+});
+
+describe("toLossless", () => {
+  it("strips undefined from nested tool payloads", async () => {
+    const { toLossless } = await import("../lib/hostsvc.js");
+    const cleaned = toLossless({ a: 1, b: undefined, c: { d: undefined, e: "" }, f: [1, undefined] });
+    assert.deepEqual(cleaned, { a: 1, b: null, c: { d: null, e: "" }, f: [1, null] });
+    assert.equal(JSON.stringify(cleaned).includes("undefined"), false);
   });
 });
