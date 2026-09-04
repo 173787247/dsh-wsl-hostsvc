@@ -5,7 +5,10 @@ import {
   buildProviderSnippets,
   buildUnslothHints,
   buildVllmHints,
+  compareCtx,
   CONNECTIVITY_PLAYBOOK,
+  parseOllamaNumCtx,
+  parseSettingsContextWindows,
 } from "../lib/providers.js";
 import { format, parameters, SERVICE_PORTS } from "../lib/hostsvc.js";
 
@@ -82,5 +85,20 @@ describe("providers", () => {
   it("emits docker hints when vllm port is closed", () => {
     const hints = buildVllmHints({ id: "vllm", open: false });
     assert.ok(hints.some((h) => /docker_doctor|Docker/i.test(h)));
+  });
+
+  it("parses ollama num_ctx and settings contextWindow", () => {
+    assert.equal(parseOllamaNumCtx({ parameters: "num_ctx 32768\nnum_gpu 99" }), 32768);
+    const map = parseSettingsContextWindows(`
+llm-pi-ai:
+  providers:
+    ollama:
+      models:
+        - id: qwen38-27b-local
+          contextWindow: 131072
+`);
+    assert.equal(map["qwen38-27b-local"], 131072);
+    assert.equal(compareCtx(131072, 8192).ctxMatch, "mismatch");
+    assert.equal(compareCtx(8192, 8192).ctxMatch, "ok");
   });
 });
