@@ -7,6 +7,7 @@ import {
   buildVllmHints,
   compareCtx,
   CONNECTIVITY_PLAYBOOK,
+  fetchOpenAiModels,
   parseOllamaNumCtx,
   parseSettingsContextWindows,
 } from "../lib/providers.js";
@@ -101,6 +102,16 @@ llm-pi-ai:
     assert.equal(compareCtx(131072, 8192).ctxMatch, "mismatch");
     assert.equal(compareCtx(8192, 8192).ctxMatch, "ok");
     assert.equal(compareCtx(null, 8192).ctxMatch, "unknown");
+  });
+
+  it("marks http 404 as tcpOpen but not apiReady", async () => {
+    const result = await fetchOpenAiModels("http://127.0.0.1:8000/v1", {
+      fetchFn: async () => ({ ok: false, status: 404, json: async () => ({}) }),
+    });
+    assert.equal(result.tcpOpen, true);
+    assert.equal(result.apiReady, false);
+    assert.equal(result.httpStatus, 404);
+    assert.equal(result.error, "http_404");
   });
 });
 
