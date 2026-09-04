@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+
+- `fetchOpenAiModels` / `openAiModels[]`: `tcpOpen`, `apiReady`, `httpStatus` (404 → apiReady false + docker_doctor advice).
+
 ## 0.4.1
 
 - Fix `value is not lossless JSON`: probe `error` always a string; sanitize tool output with `toLossless` (no `undefined`).

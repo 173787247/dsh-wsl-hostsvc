@@ -1,7 +1,7 @@
 {
   "name": "dsh-wsl-hostsvc",
-  "version": "0.4.1",
-  "description": "From WSL, probe Windows-host Ollama / LM Studio / vLLM / llama-server, compare ctx, suggest baseURL.",
+  "version": "0.4.2",
+  "description": "From WSL, probe Windows-host Ollama / LM Studio / vLLM / llama-server; openAiModels apiReady vs TCP.",
   "license": "MIT",
   "repository": {
     "type": "git",
