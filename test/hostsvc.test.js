@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  buildLocalSessionAdvice,
   buildOllamaHints,
   buildProviderSnippets,
   buildUnslothHints,
@@ -8,6 +9,7 @@ import {
   compareCtx,
   CONNECTIVITY_PLAYBOOK,
   fetchOpenAiModels,
+  parseDefaultModel,
   parseOllamaNumCtx,
   parseSettingsContextWindows,
 } from "../lib/providers.js";
@@ -121,5 +123,30 @@ describe("toLossless", () => {
     const cleaned = toLossless({ a: 1, b: undefined, c: { d: undefined, e: "" }, f: [1, undefined] });
     assert.deepEqual(cleaned, { a: 1, b: null, c: { d: null, e: "" }, f: [1, null] });
     assert.equal(JSON.stringify(cleaned).includes("undefined"), false);
+  });
+});
+
+describe("default model + session advice", () => {
+  it("parses agent-default-model", () => {
+    const dm = parseDefaultModel(`
+agent-default-model:
+  provider: deepseek-official
+  model: deepseek-flash
+  reasoningEffort: max
+llm-pi-ai:
+  providers: {}
+`);
+    assert.equal(dm.model, "deepseek-flash");
+    assert.equal(dm.provider, "deepseek-official");
+  });
+
+  it("advises flash when local ollama is open", () => {
+    const tips = buildLocalSessionAdvice({
+      ollamaOpen: true,
+      ollamaLoaded: [{ name: "qwen3.8:27b" }],
+      defaultModel: "deepseek-flash",
+    });
+    assert.ok(tips.some((t) => /deepseek-flash/i.test(t)));
+    assert.ok(tips.some((t) => /loaded/i.test(t)));
   });
 });

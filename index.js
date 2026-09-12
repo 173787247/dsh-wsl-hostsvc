@@ -11,7 +11,7 @@ export function apply(ctx, config = {}) {
   ctx.systemPrompt.section({
     name: "tool:host_reach",
     order: 114,
-    text: "Use host_reach to probe Windows-host local LLMs from WSL (Ollama 11434, LM Studio 1234, vLLM 8000, llama-server 8080). Paste providerSnippets into ~/.dsh/settings.yaml under llm-pi-ai.providers; keep contextWindow ≤ Ollama n_ctx. Follow connectivityPlaybook when HTTPS or DNS also fails.",
+    text: "Use host_reach to probe Windows-host local LLMs from WSL (Ollama 11434, LM Studio 1234, vLLM 8000, llama-server 8080). Paste providerSnippets into ~/.dsh/settings.yaml under llm-pi-ai.providers; keep contextWindow ≤ Ollama n_ctx. If local chat is slow or idle-times out, switch the session to deepseek-flash and run gpu_doctor for VRAM. Follow connectivityPlaybook when HTTPS or DNS also fails.",
   });
 
   ctx.tools.register({
