@@ -6,6 +6,21 @@ DeepSeek Harness plugin: from **WSL**, probe **Windows-host** OpenAI-compatible 
 
 [中文说明 → README.zh.md](./README.zh.md)
 
+## Compatibility
+
+| Field | Value |
+|-------|-------|
+| **Plugin** | `dsh-wsl-hostsvc` **0.4.2** |
+| **Minimum dsh** | ≥ **0.1.2** (web UI one-shot `?token=` on Windows relay `:3081`) |
+| **Latest verified** | See [dsh-wsl-kit Compatibility](https://github.com/173787247/dsh-wsl-kit#compatibility-2026-09) (currently **`0.1.5-rc.1`**) — single source of truth for the suite |
+| **Kit set** | `llm` / `full` (some also useful alone) |
+| **Cloud Flash** | Use model id **`deepseek-flash`** (V4.1 Flash) in `~/.dsh/settings.yaml` / `llm-deepseek` — not configured by this plugin |
+| **Agent Teams** | Upstream experimental; not required here |
+
+Suite floor versions: kit [`check-plugin-versions.sh`](https://github.com/173787247/dsh-wsl-kit/blob/master/scripts/check-plugin-versions.sh). Fault tree: [TROUBLESHOOTING.md](https://github.com/173787247/dsh-wsl-kit/blob/master/docs/TROUBLESHOOTING.md).
+
+**Scope:** local OpenAI-compatible servers on the Windows host (`host_reach`). Does not configure cloud DeepSeek; for V4.1 Flash set model id **`deepseek-flash`** in settings.
+
 ## What it does
 
 Tool **`host_reach`** (default `profile=all`) probes:
@@ -31,7 +46,7 @@ Template: [`examples/local-llm-providers.settings.yaml`](./examples/local-llm-pr
 
 ## Ollama context (common 400)
 
-Plugin-heavy dsh prompts often need **>8k** tokens even for a short chat turn.
+Plugin-heavy dsh prompts often need **>8k** tokens even for a short chat turn. This is independent of cloud **`deepseek-flash`** (V4.1 Flash), which you configure under official `llm-deepseek` / default model — not via `host_reach`.
 
 1. Set Ollama `PARAMETER num_ctx 32768` (Modelfile / recreate model), **or** `OLLAMA_NUM_CTX` on Windows before starting Ollama.
 2. Match `contextWindow` in settings to that `num_ctx` (not the model's theoretical max like 131072 unless Ollama actually runs it).
