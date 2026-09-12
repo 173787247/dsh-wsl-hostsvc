@@ -1,3 +1,7 @@
+## 0.4.3
+
+- host_reach: ollama /api/ps loaded models, defaultModel scrape, local-session / deepseek-flash advice.
+
 # Changelog
 
 ## 0.4.2
