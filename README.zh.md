@@ -6,11 +6,23 @@ DeepSeek Harness 插件：在 **WSL** 里探测 **Windows 主机**上的 OpenAI 
 
 [English → README.md](./README.md)
 
+## 在套件里的位置
+
+从 WSL 探测 Windows 上的 Ollama、LM Studio、vLLM、llama-server。TCP 通了不等于 API 就绪。
+
+```mermaid
+flowchart LR
+  agent["dsh agent"] --> tool["host_reach"] --> win["Windows 本机模型端口"]
+```
+
+整套关系图和版本快照：[dsh-wsl-kit 中文说明](https://github.com/173787247/dsh-wsl-kit/blob/master/README.zh.md)。本插件是 **0.4.3**（llm，也在 full）。不要把那份总表抄进本 README。
+
+
 ## 兼容性
 
 | 项 | 值 |
 |----|----|
-| **插件** | `dsh-wsl-hostsvc` **0.4.2** |
+| **插件** | `dsh-wsl-hostsvc` **0.4.3** |
 | **最低 dsh** | ≥ **0.1.2**（Windows 中继 `:3081` 一次性 `?token=`） |
 | **最新验证** | 以 [dsh-wsl-kit 兼容性](https://github.com/173787247/dsh-wsl-kit#compatibility-2026-09) 为准（当前 **`0.1.5-rc.1`**）— 套件唯一真源 |
 | **套件档位** | `llm` / `full`（也可单独装） |
